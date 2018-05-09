@@ -9,15 +9,17 @@
               <span class="line"></span>
           </div>
       </div>
-      <!-- <div class="pull-down-load-tips" style="">
+      <div class="pull-down-load-tips" style="">
           <i class="iloading"></i><span class="txt">下拉刷新</span>
-      </div> -->
-  </div>
+      </div>
+    </div>
     <!-- <router-view/> -->
   </div>
 </template>
 
 <script>
+import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.min.css'
 export default {
   name: 'App',
   data () {
@@ -88,9 +90,15 @@ export default {
           type: 'yaguan',
           name: '亚冠'
         }
-      ]
+      ] 
     }
-  }
+  },
+  mounted () {
+     
+  },
+   methods: {  
+    
+  }  
 }
 </script>
 
@@ -142,5 +150,27 @@ export default {
     }
   }
 
+}
+.pull-down-load-tips{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  height: 72px;
+  line-height: 72px;
+  background: rgba(218, 236, 250, 0.9);
+  text-align: center;
+  color: #7f8387;
+  font-size: 32px;
+  .iloading{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: url('./assets/images/loading.png') no-repeat;
+    background-size: 32px;
+    margin-right: 10px;
+    vertical-align: -6px;
+  }
 }
 </style>
