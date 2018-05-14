@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import tuijian from '@/page/tuijian.vue'
+import zhibo from '@/page/zhibo.vue'
 
 Vue.use(Router)
 
@@ -8,8 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'tuijian',
+      component: tuijian
+    },
+    {
+      path: '/zhibo',
+      name: 'zhibo',
+      component: zhibo
     }
   ]
 })

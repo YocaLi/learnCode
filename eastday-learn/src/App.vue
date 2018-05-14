@@ -4,7 +4,7 @@
       <div class="tab-scroll-wrap">
           <div class="nav-new">
               <ul>
-                  <li v-for="(item, index) in nav" :key="index" :class="{'active': item.active}"  @click="changeNav(index)">{{item.name}}</li>
+                  <li v-for="(item, index) in nav" :key="index" :class="{'active': item.active}"  @click="changeNav(index)" >{{item.name}}</li>
               </ul>
               <span class="line"></span>
           </div>
@@ -13,8 +13,10 @@
           <i class="iloading"></i><span class="txt">下拉刷新</span>
       </div>
     </div>
-    
-    <router-view/>
+
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
   </div>
 </template>
 
@@ -114,6 +116,7 @@ export default {
     changeNav(index){
       this.nav.forEach((v) => v.active = false)
       this.nav[index].active = true
+      this.$router.push({path: '/' + this.nav[index].type})
     }
   }  
 }

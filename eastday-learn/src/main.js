@@ -10,6 +10,7 @@ Vue.config.debug = true // 开区debug模式
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  mode: 'history',
   router,
   components: { App },
   template: '<App/>'
