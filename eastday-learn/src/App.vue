@@ -4,7 +4,7 @@
       <div class="tab-scroll-wrap">
           <div class="nav-new">
               <ul>
-                  <li v-for="(item, index) in nav" :key="index" :class="{'active': index == 0}">{{item.name}}</li>
+                  <li v-for="(item, index) in nav" :key="index" :class="{'active': item.active}"  @click="changeNav(index)">{{item.name}}</li>
               </ul>
               <span class="line"></span>
           </div>
@@ -13,7 +13,8 @@
           <i class="iloading"></i><span class="txt">下拉刷新</span>
       </div>
     </div>
-    <!-- <router-view/> -->
+    
+    <router-view/>
   </div>
 </template>
 
@@ -29,66 +30,79 @@ export default {
           channel: 901215,
           type: 'tuijian',
           name: '推荐',
+          active: true
         },
         {
           channel: '',
           type: 'zhibo',
-          name: '直播'
+          name: '直播',
+          active: false
         },
         {
           channel: 900047,
           type: 'NBA',
-          name: 'NBA'
+          name: 'NBA',
+          active: false
         },
         {
           channel: 900048,
           type: 'CBA',
-          name: 'CBA'
+          name: 'CBA',
+          active: false
         },
         {
           channel: 900050,
           type: 'zhongchao',
-          name: '中超'
+          name: '中超',
+          active: false
         },
         {
           channel: 900051,
           type: 'yingchao',
-          name: '英超'
+          name: '英超',
+          active: false
         },
         {
           channel: 900052,
           type: 'xijia',
-          name: '西甲'
+          name: '西甲',
+          active: false
         },
         {
           channel: 900053,
           type: 'yijia',
-          name: '意甲'
+          name: '意甲',
+          active: false
         },
         {
           channel: 901213,
           type: 'shipin',
-          name: '视频'
+          name: '视频',
+          active: false
         },
         {
           channel: 900054,
           type: 'dejia',
-          name: '德甲'
+          name: '德甲',
+          active: false
         },
         {
           channel: 900056,
           type: 'ouguan',
-          name: '欧冠'
+          name: '欧冠',
+          active: false
         },
         {
           channel: 900062,
           type: 'fajia',
-          name: '法甲'
+          name: '法甲',
+          active: false
         },
         {
           channel: 900058,
           type: 'yaguan',
-          name: '亚冠'
+          name: '亚冠',
+          active: false
         }
       ] 
     }
@@ -96,8 +110,11 @@ export default {
   mounted () {
      
   },
-   methods: {  
-    
+  methods: {  
+    changeNav(index){
+      this.nav.forEach((v) => v.active = false)
+      this.nav[index].active = true
+    }
   }  
 }
 </script>
