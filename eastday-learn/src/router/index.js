@@ -9,6 +9,10 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: '/tuijian'
+    },
+    {
+      path: '/tuijian',
       name: 'tuijian',
       component: tuijian
     },

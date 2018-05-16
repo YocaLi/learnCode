@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Sjsonp from './assets/js/config'
 import 'lib-flexible'
 
+Vue.prototype.$http = Sjsonp
 Vue.config.productionTip = false
 Vue.config.debug = true // 开区debug模式
 /* eslint-disable no-new */
