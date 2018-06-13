@@ -4,7 +4,6 @@ import tuijian from '@/page/tuijian.vue'
 import zhibo from '@/page/zhibo.vue'
 
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {
