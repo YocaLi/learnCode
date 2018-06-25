@@ -1,7 +1,7 @@
 <template>
     <div id="mainSection">
         <div class="swiper-wrapper">
-            <div id="swiperContainer" class="swiper-container fs-swiper-container">
+            <!-- <div id="swiperContainer" class="swiper-container fs-swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide"  v-for="(item,index) of lunboData" :key="index">
                         <a :href="item.url">
@@ -12,7 +12,17 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <swiper :options="swiperContainer" ref="mySwiper">
+              <swiper-slide v-for="(item,index) of lunboData" :key="index">
+                <a :href="item.url">
+                  <img :src="item.image_url">
+                  <p>{{item.title}}
+                    <span>{{index + 1}} / <i>{{lunboData.length}}</i></span>
+                  </p>
+                </a>
+              </swiper-slide>
+            </swiper>
         </div>
         <section class="sec-match">
           <ul class="clearfix">
@@ -38,16 +48,24 @@
     </div>
 </template>
 <script>
-import Swiper from "swiper";
-import jiekou from '../assets/js/jiekou.js'
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+import jiekou from "../assets/js/jiekou.js";
 
-const {lunbo, matchdata} = jiekou.API_URL
+const { lunbo, matchdata } = jiekou.API_URL;
 
 export default {
   name: "tuijian",
+  components: {  
+      swiper,  
+      swiperSlide  
+  },
   data() {
     return {
-      lunboData: []
+      lunboData: [],
+      swiperContainer:{
+         autoplay: true,
+         delay: 3000
+      }
     };
   },
   methods: {
@@ -59,23 +77,14 @@ export default {
           name: "callbcak"
         }
       ).then(res => {
-        res.data.length = res.data.length > 5 ? 5 : res.data.length
+        res.data.length = res.data.length > 5 ? 5 : res.data.length;
         this.lunboData = res.data;
       });
     }
   },
   mounted() {
-    
   },
-  updated () {
-    new Swiper("#swiperContainer", {
-      loop: true /* spaceBetween: 10, */,
-      centeredSlides: true,
-      autoplay: {
-        delay: 4000,
-        disableOnInteraction:false
-      }
-    });
+  updated() {
   },
   created() {
     this.lunboRender();
@@ -107,23 +116,6 @@ export default {
   position: relative;
   overflow: hidden;
   z-index: 1;
-  .swiper-slide {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-}
-.swiper-slide {
-  -webkit-overflow-scrolling: touch;
-  -webkit-flex-shrink: 0;
-  -ms-flex: 0 0 auto;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-.fs-swiper-container {
   width: 100%;
   height: 375px;
   .swiper-slide {
@@ -161,5 +153,15 @@ export default {
       font-size: 24px;
     }
   }
+}
+.swiper-slide {
+  -webkit-overflow-scrolling: touch;
+  -webkit-flex-shrink: 0;
+  -ms-flex: 0 0 auto;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 </style>
