@@ -17,8 +17,7 @@ export function param(data){
     let str = ''
     for(let key in data){
         let value = !data[key] ? '' : data[key]
-        console.log(!data[key])
-        str += `${key}=${encodeURIComponent(value)}` 
+        str += `&${key}=${encodeURIComponent(value)}` 
     }
     return str ? str : ''
 }
