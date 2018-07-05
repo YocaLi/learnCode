@@ -26,7 +26,7 @@
 <script>
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import jiekou from "../assets/js/jiekou.js";
-
+import _util_ from '../assets/js/common.js'
 const { lunbo, matchdata } = jiekou.API_URL;
 
 export default {
@@ -97,6 +97,7 @@ export default {
       let html = ''
       let orderStr = ''
       let className = ''
+      console.log(_util_)
       if (data.ismatched === '-1') {
           orderStr = '<span class="empty">未开赛</span>'
           className = 'no-start'
@@ -120,7 +121,7 @@ export default {
                     <p>${data.home_team}</p>
                 </div>
                 <div class="info" id="${data.matchid}">
-                    <div class="score"></div>
+                    <div class="score">${data.ismatched === '-1' ? _util_.formatTimeToMatch(data.currentServerTime, data.starttime) : data.home_score + '-' + data.visit_score}</div>
                 </div>
                 <div class="team">
                     <img src="${data.visit_logoname}" alt=""/>
@@ -141,7 +142,7 @@ export default {
   }
 };
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import "swiper/dist/css/swiper.min.css";
 @import '../assets/css/tuijian.less';
 </style>
