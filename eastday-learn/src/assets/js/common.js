@@ -44,4 +44,70 @@ export default {
             return date
         }
     },
+    getOsType() {
+        let agent = navigator.userAgent.toLowerCase()
+        let os_type = ''
+        let version
+        if (/android/i.test(navigator.userAgent)) {
+            let index = agent.indexOf('android')
+            version = agent.substr(index + 8, 3)
+            os_type = 'Android ' + version
+        }
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+            let index = agent.indexOf('os')
+            version = agent.substr(index + 3, 3)
+            os_type = 'iOS ' + version
+        }
+        if (/Linux/i.test(navigator.userAgent) && !/android/i.test(navigator.userAgent) && !/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+            os_type = 'Linux'
+        }
+        if (/windows|win32/i.test(navigator.userAgent)) {
+            os_type = 'windows32'
+        }
+        if (/windows|win64/i.test(navigator.userAgent)) {
+            os_type = 'windows64'
+        }
+        return os_type
+    },
+    browserType() {
+        let agent = navigator.userAgent.toLowerCase()
+        let browser_type = ''
+        if (agent.indexOf('msie') > 0) {
+            browser_type = 'IE'
+        }
+        if (agent.indexOf('firefox') > 0) {
+            browser_type = 'firefox'
+        }
+        if (agent.indexOf('chrome') > 0 && agent.indexOf('mb2345browser') < 0 && agent.indexOf('360 aphone browser') < 0) {
+            browser_type = 'chrome'
+        }
+        if (agent.indexOf('360 aphone browser') > 0 || agent.indexOf('qhbrowser') > 0) {
+            browser_type = '360'
+        }
+        if (agent.indexOf('ucbrowser') > 0) {
+            browser_type = 'UC'
+        }
+        if (agent.indexOf('micromessenger') > 0) {
+            browser_type = 'WeChat'
+        }
+        if ((agent.indexOf('mqqbrowser') > 0 || agent.indexOf('qq') > 0) && agent.indexOf('micromessenger') < 0) {
+            browser_type = 'QQ'
+        }
+        if (agent.indexOf('miuibrowser') > 0) {
+            browser_type = 'MIUI'
+        }
+        if (agent.indexOf('mb2345browser') > 0) {
+            browser_type = '2345'
+        }
+        if (agent.indexOf('sogoumobilebrowser') > 0) {
+            browser_type = 'sogou'
+        }
+        if (agent.indexOf('liebaofast') > 0) {
+            browser_type = 'liebao'
+        }
+        if (agent.indexOf('safari') > 0 && agent.indexOf('chrome') < 0 && agent.indexOf('ucbrowser') < 0 && agent.indexOf('micromessenger') < 0 && agent.indexOf('mqqbrowser') < 0 && agent.indexOf('miuibrowser') < 0 && agent.indexOf('mb2345browser') < 0 && agent.indexOf('sogoumobilebrowser') < 0 && agent.indexOf('liebaofast') < 0 && agent.indexOf('qhbrowser') < 0) {
+            browser_type = 'safari'
+        }
+        return browser_type
+    },
 }

@@ -72,3 +72,9 @@ label {cursor:pointer;}
 .ib{display: inline-block;}
 .inline{display: inline;}
 .block{display: block;}
+
+.separate-line {
+  width: 100%;
+  height: 0.2rem;
+  background: #f0f0f0;
+}
