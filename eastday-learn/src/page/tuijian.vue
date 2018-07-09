@@ -1,5 +1,5 @@
 <template>
-    <div id="mainSection">
+    <div id="mainSection" ref="mainSection">
         <div class="swiper-wrapper">
             <swiper :options="swiperContainer" ref="mySwiper">
               <swiper-slide v-for="(item,index) of lunboData" :key="index">
@@ -48,7 +48,7 @@
         </a>
         <div class="separate-line"></div>
         <section class="sec-news-list">
-          <ul>
+          <ul ref="newsUl">
             <li class="clearfix" v-for="(item, index) of newsArr" :key="index">
               <a :href="item.url" >
                 <div class="title" v-if="item.miniimg.length > 2">{{item.topic}}</div>
@@ -98,7 +98,8 @@ export default {
       },
       matchArr: [],
       newsArr: [],
-      newsData :{}
+      newsData :{},
+      isScroll : true
     };
   },
   methods: {
@@ -144,7 +145,10 @@ export default {
           name: "callback" + new Date() / 1
         }
       ).then(res => {
-        this.newsArr = res.data;
+        this.newsArr = this.newsArr.concat(res.data)
+        this.newsData.startkey = res.endkey
+        this.newsData.pgnum++
+        this.isScroll = true
       });
     },
     state(data, flag) {
@@ -164,18 +168,24 @@ export default {
           break;
       }
       return state;
+    },
+    winScroll(){
+      let win = window.innerHeight;
+      let Ul = this.$refs.newsUl
+      window.addEventListener('scroll',() => {
+        let lastTop = Ul.lastChild.offsetTop
+        let winScroll = window.scrollY
+        if(lastTop < winScroll + win && this.isScroll){
+          this.isScroll = false
+          this.news()
+        }
+      })
     }
   },
-  mounted() {
+  activated() {
     this.matchdataRender();
     this.news();
-    console.log(111)
-    let win = document.documentElement;
-    window.addEventListener('scroll',() => {
-      
-    })
-  },
-  updated() {
+    this.winScroll()
   },
   created() {
     this.lunboRender();

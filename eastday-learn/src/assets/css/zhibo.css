@@ -1,0 +1,214 @@
+.crumbs {
+  background: #f3f3f3;
+  border-bottom: 2px #ddd solid;
+  position: relative;
+  height: 70px;
+  margin-top: 80px;
+}
+.time {
+  overflow: hidden;
+  height: 100%;
+  position: absolute;
+  top: 4px;
+  right: 150px;
+}
+.time .cont {
+  width: 430px;
+  height: 60px;
+  background: #fff;
+  border-radius: 30px;
+  float: left;
+}
+.time .cont span {
+  display: inline-block;
+  float: left;
+}
+.time .cont .left,
+.time .cont .right {
+  width: 60px;
+  height: 60px;
+}
+.time .cont .left {
+  background: url("../images/left-arr.png") no-repeat center center;
+  background-size: 17px 28px;
+}
+.time .cont .middle {
+  width: 310px;
+  color: #333;
+  font-size: 28px;
+  text-align: center;
+  height: 28px;
+  line-height: 28px;
+  margin-top: 16px;
+}
+.time .cont .right {
+  background: url("../images/right-arr.png") no-repeat center center;
+  background-size: 17px 28px;
+}
+.time .sub {
+  margin-left: 30px;
+  height: 60px;
+  line-height: 60px;
+  color: #1595ed;
+  font-size: 24px;
+  display: inline-block;
+}
+.matchs li {
+  height: 1.56rem;
+}
+.matchs li a {
+  display: block;
+  overflow: hidden;
+  padding: 0.32rem .24rem;
+  height: 100%;
+}
+.matchs li a > div {
+  height: 100%;
+  float: left;
+}
+.matchs li a .tt {
+  width: 1.21rem;
+  font-size: .2rem;
+  line-height: .26rem;
+  color: #999999;
+}
+.matchs li a .tt .tit {
+  height: 1.06rem;
+  overflow: hidden;
+}
+.matchs li a .tt em {
+  font-size: .28rem;
+  line-height: .56rem;
+  color: #000;
+}
+.matchs li a .team {
+  width: 2.5rem;
+  margin-left: .55rem;
+  height: 100%;
+  font-size: .28rem;
+  line-height: 0.4rem;
+  position: relative;
+}
+.matchs li a .team img {
+  width: .4rem;
+  height: .4rem;
+  margin-right: .1rem;
+  float: left;
+  font-size: 0;
+}
+.matchs li a .team .host,
+.matchs li a .team .visit {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  height: 0.4rem;
+}
+.matchs li a .team .host span,
+.matchs li a .team .visit span {
+  float: left;
+  line-height: 0.45rem;
+  font-size: 0.28rem;
+}
+.matchs li a .team .visit {
+  margin-top: 0.1rem;
+}
+.matchs li a .team .mtit {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  line-height: .34rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-transform: translate(0, -50%);
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+.matchs li a .team .title2 {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+.matchs li a .score {
+  font-size: .32rem;
+  width: .6rem;
+  color: #000;
+  text-align: center;
+}
+.matchs li a .score .vscore {
+  margin-top: 0.1rem;
+}
+.matchs li a .state {
+  float: right;
+  width: 1.3rem;
+  height: 100%;
+  line-height: 0.92rem;
+  font-size: .24rem;
+  padding: 0;
+  color: #999;
+  text-align: left;
+}
+.matchs li a .state em {
+  padding-left: .3rem;
+  display: inline-block;
+  color: #999;
+  background: url(../images/i-video-match.png) left center no-repeat;
+  -webkit-background-size: auto .24rem;
+  background-size: auto .24rem;
+}
+.matchs li a .info {
+  height: 0.6rem;
+  overflow: hidden;
+  line-height: .3rem;
+  width: 1.3rem;
+  margin-top: 12%;
+}
+.matchs li.live a .score {
+  color: #f33;
+}
+.matchs li.live a .state {
+  position: relative;
+}
+.matchs li.live a .state .info {
+  font-size: .2rem;
+}
+.matchs li.live a .state .info::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  width: .26rem;
+  height: .3rem;
+  background: url(../images/i-live-match.png) center no-repeat;
+  -webkit-background-size: .26rem auto;
+  background-size: .26rem auto;
+}
+.matchs li.live a .state em {
+  color: #f33;
+  font-size: .24rem;
+  text-align: center;
+  width: 4em;
+  padding: 0;
+  background: none;
+  -webkit-background-size: auto .24rem;
+  background-size: auto .24rem;
+}
+.matchs li.unstart .score i {
+  display: block;
+  height: 100%;
+  width: .6rem;
+  background: url("../images/i-clock.png") center no-repeat;
+  -webkit-background-size: .4rem auto;
+  background-size: .4rem auto;
+}
+.matchs li::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #e9e9e9;
+}

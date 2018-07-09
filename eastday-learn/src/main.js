@@ -16,8 +16,8 @@ Vue.use(VueAweSomeSwiper)
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   mode: 'history',
+  el: '#app',
   router,
   components: { App },
   template: '<App/>'
