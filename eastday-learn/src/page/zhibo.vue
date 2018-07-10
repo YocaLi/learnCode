@@ -10,22 +10,25 @@
             </div>
         </div>
         <ul class="matchs">
-            <li class="end">
-                <a href="">
+            <li class="end"  v-for="(item, index) of matchArr" :key="index">
+                <a :href="item.liveurl">
                     <div class="tt">
                         <div class="tit">
-                            <em>03:00</em><br>NBA夏季联赛
+                            <em>{{item.starttime.split(' ')[1]}}</em><br>{{item.title02}}
                         </div>
                     </div>
                     <div class="team">
-                        <div class="host"><img src="" alt=""><span>鹈鹕</span></div>
-                        <div class="visit"><img src="" alt=""><span>活塞</span></div>
+                        <div class="host"><img :src="item.home_logoname" alt=""><span>{{item.home_team}}</span></div>
+                        <div class="visit"><img :src="item.visit_logoname" alt=""><span>{{item.visit_team}}</span></div>
                     </div>
-                    <div class="score">
-                    <div class="hscore">97</div>
-                        <div class="vscore">105</div>                      
+                    <div class="score"> 
+                        <i v-if="item.ismatched / 1 == -1"></i>   
+                        <div v-else>
+                            <div class="hscore">{{item.saishi_id === '900002' ?item.visit_score : item.home_score}}</div>
+                            <div class="vscore" >{{item.saishi_id === '900002' ?item.home_score : item.visit_score}}</div> 
+                        </div>         
                     </div>
-                    <div class="state"><div class="info"><em>集锦</em></div></div>
+                    <div class="state"><div class="info" v-html="info(item.ismatched,item)"></div></div>
                 </a>
             </li>
         </ul>
@@ -34,13 +37,81 @@
 <script>
 import jiekou from "../assets/js/jiekou.js";
 import _util_ from "../assets/js/common.js";
+const { matchdata } = jiekou.API_URL;
 export default {
   data() {
-    return {};
+    return {
+      todayL: new Date(new Date().toLocaleDateString()).getTime(),
+      tomorrowL:
+        new Date(new Date().toLocaleDateString()).getTime() +
+        24 * 60 * 60 * 1000,
+      matchArr: []
+    };
+  },
+  methods: {
+    matchAjax() {
+      this.$http(
+        matchdata,
+        {
+          startts: this.todayL,
+          endts: this.tomorrowL,
+          isimp: 1,
+          qid: null,
+          domain: "dfsports_h5"
+        },
+        {
+          name: "callback" + new Date() / 1
+        }
+      ).then(res => {
+        this.matchArr = res.data;
+      });
+    },
+    state(data, flag) {
+      let state = "";
+      if (data.sport_type / 1 === 1 && !flag) {
+        state += "other ";
+      }
+      switch (data.ismatched / 1) {
+        case -1:
+          state += "no-start";
+          break;
+        case 0:
+          state += "living";
+          break;
+        default:
+          state += "end";
+          break;
+      }
+      return state;
+    },
+    info(a, v) {
+        let state = ''
+        if (a / 1 === 1) {
+          state = v.hasjijin / 1 + v.hasluxiang / 1 ? `${v.hasjijin / 1 ? "<em>集锦</em>" : ""}${ v.hasluxiang / 1 ? "<em>录像</em>" : "" }` : "已结束";
+        }
+        if (a / 1 === 0) {
+          state = `<em>直播中</em>${ this.liveInfo(v.zhiboinfozh).length ? `<br>${this.liveInfo(v.zhiboinfozh)[0]}` : "" }`;
+        }
+        if(a / 1 === -1) {
+            state = this.liveInfo(v.zhiboinfozh).length ? `${this.liveInfo(v.zhiboinfozh)[0] ? this.liveInfo(v.zhiboinfozh)[0] : ""}${ this.liveInfo(v.zhiboinfozh)[1] ? `<br>${this.liveInfo(v.zhiboinfozh)[1]}` : "" }` : "敬请期待";
+        }
+        return state
+    },
+    liveInfo(arr) {
+      let infoName = [];
+      arr.forEach(function(item) {
+        let name = item.title.split("(")[0];
+        if (infoName.indexOf(name) < 0) infoName.push(name);
+      });
+      return infoName;
+    }
+  },
+  mounted() {
+    this.matchAjax();
   }
 };
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import "swiper/dist/css/swiper.min.css";
 @import "../assets/css/zhibo.less";
 </style>
