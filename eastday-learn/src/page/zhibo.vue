@@ -3,14 +3,14 @@
         <div class="crumbs">
             <div class="time all-time">
                 <div class="cont">
-                    <span class="left"></span>
-                    <span class="middle" id="dateText" data-data-timestamp="1531065600000">07-09 至 07-10</span>
-                    <span class="right"></span>
+                    <span class="left" @click="toOther(false)"></span>
+                    <span class="middle" id="dateText" data-data-timestamp="1531065600000">{{new Date(todayL).format('MM-dd')}} 至 {{new Date(new Date(todayL).getTime() + 24 * 60 * 60 * 1000).format('MM-dd')}}</span>
+                    <span class="right" @click="toOther(true)"></span>
                 </div>
             </div>
         </div>
         <ul class="matchs">
-            <li class="end"  v-for="(item, index) of matchArr" :key="index">
+            <li v-for="(item, index) of matchArr" :key="index" :class="state(item)">
                 <a :href="item.liveurl">
                     <div class="tt">
                         <div class="tit">
@@ -31,6 +31,9 @@
                     <div class="state"><div class="info" v-html="info(item.ismatched,item)"></div></div>
                 </a>
             </li>
+            <li v-if="!matchArr.length" style="text-align: center;line-height: 40px;font-size: 15px;">
+                无更多数据...
+            </li>
         </ul>
     </div>
 </template>
@@ -41,42 +44,46 @@ const { matchdata } = jiekou.API_URL;
 export default {
   data() {
     return {
-      todayL: new Date(new Date().toLocaleDateString()).getTime(),
-      tomorrowL:
-        new Date(new Date().toLocaleDateString()).getTime() +
-        24 * 60 * 60 * 1000,
+      todayL: new Date().toLocaleDateString(),
       matchArr: []
     };
   },
   methods: {
     matchAjax() {
-      this.$http(
-        matchdata,
-        {
-          startts: this.todayL,
-          endts: this.tomorrowL,
-          isimp: 1,
-          qid: null,
-          domain: "dfsports_h5"
-        },
-        {
-          name: "callback" + new Date() / 1
-        }
-      ).then(res => {
-        this.matchArr = res.data;
-      });
+        let todayL = new Date(this.todayL).getTime()
+        let tomorrowL = new Date(todayL).getTime() + 24 * 60 * 60 * 1000
+        this.$http(
+            matchdata,
+            {
+            startts: todayL,
+            endts: tomorrowL,
+            isimp: 1,
+            qid: null,
+            domain: "dfsports_h5"
+            },
+            {
+            name: "callback" + new Date() / 1
+            }
+        ).then(res => {
+            if(!res.data.length){
+
+            }
+            this.matchArr = res.data;
+        });
     },
-    state(data, flag) {
+    toOther(flag){
+        console.log(new Date(new Date(this.todayL).getTime() + 24 * 60 * 60 * 1000).toLocaleDateString())
+        this.todayL = flag ? new Date(new Date(this.todayL).getTime() + 24 * 60 * 60 * 1000).toLocaleDateString() : new Date(new Date(this.todayL).getTime() - 24 * 60 * 60 * 1000).toLocaleDateString()
+        this.matchAjax()
+    },
+    state(data) {
       let state = "";
-      if (data.sport_type / 1 === 1 && !flag) {
-        state += "other ";
-      }
       switch (data.ismatched / 1) {
         case -1:
-          state += "no-start";
+          state += "unstart";
           break;
         case 0:
-          state += "living";
+          state += "live";
           break;
         default:
           state += "end";

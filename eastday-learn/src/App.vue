@@ -235,6 +235,7 @@ export default {
       if(this.nav[index].toUrl){
         this.$router.push({path: '/' + this.nav[index].type})
       }else{
+        this.$router.push({path: '/'})
         this.isVideo = this.nav[index].type == 'shipin'
         this.newsArr = []
         this.newsData.startkey = '';
