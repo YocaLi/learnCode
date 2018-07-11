@@ -42,80 +42,81 @@ import jiekou from "../assets/js/jiekou.js";
 import _util_ from "../assets/js/common.js";
 const { matchdata } = jiekou.API_URL;
 export default {
-  data() {
-    return {
-      todayL: new Date().toLocaleDateString(),
-      matchArr: []
-    };
-  },
-  methods: {
-    matchAjax() {
-        let todayL = new Date(this.todayL).getTime()
-        let tomorrowL = new Date(todayL).getTime() + 24 * 60 * 60 * 1000
-        this.$http(
-            matchdata,
-            {
-            startts: todayL,
-            endts: tomorrowL,
-            isimp: 1,
-            qid: null,
-            domain: "dfsports_h5"
-            },
-            {
-            name: "callback" + new Date() / 1
-            }
-        ).then(res => {
-            if(!res.data.length){
+    name:'zhibo',
+    data() {
+        return {
+        todayL: new Date().toLocaleDateString(),
+        matchArr: []
+        };
+    },
+    methods: {
+        matchAjax() {
+            let todayL = new Date(this.todayL).getTime()
+            let tomorrowL = new Date(todayL).getTime() + 24 * 60 * 60 * 1000
+            this.$http(
+                matchdata,
+                {
+                startts: todayL,
+                endts: tomorrowL,
+                isimp: 1,
+                qid: null,
+                domain: "dfsports_h5"
+                },
+                {
+                name: "callback" + new Date() / 1
+                }
+            ).then(res => {
+                if(!res.data.length){
 
+                }
+                this.matchArr = res.data;
+            });
+        },
+        toOther(flag){
+            console.log(new Date(new Date(this.todayL).getTime() + 24 * 60 * 60 * 1000).toLocaleDateString())
+            this.todayL = flag ? new Date(new Date(this.todayL).getTime() + 24 * 60 * 60 * 1000).toLocaleDateString() : new Date(new Date(this.todayL).getTime() - 24 * 60 * 60 * 1000).toLocaleDateString()
+            this.matchAjax()
+        },
+        state(data) {
+        let state = "";
+        switch (data.ismatched / 1) {
+            case -1:
+            state += "unstart";
+            break;
+            case 0:
+            state += "live";
+            break;
+            default:
+            state += "end";
+            break;
+        }
+        return state;
+        },
+        info(a, v) {
+            let state = ''
+            if (a / 1 === 1) {
+            state = v.hasjijin / 1 + v.hasluxiang / 1 ? `${v.hasjijin / 1 ? "<em>集锦</em>" : ""}${ v.hasluxiang / 1 ? "<em>录像</em>" : "" }` : "已结束";
             }
-            this.matchArr = res.data;
+            if (a / 1 === 0) {
+            state = `<em>直播中</em>${ this.liveInfo(v.zhiboinfozh).length ? `<br>${this.liveInfo(v.zhiboinfozh)[0]}` : "" }`;
+            }
+            if(a / 1 === -1) {
+                state = this.liveInfo(v.zhiboinfozh).length ? `${this.liveInfo(v.zhiboinfozh)[0] ? this.liveInfo(v.zhiboinfozh)[0] : ""}${ this.liveInfo(v.zhiboinfozh)[1] ? `<br>${this.liveInfo(v.zhiboinfozh)[1]}` : "" }` : "敬请期待";
+            }
+            return state
+        },
+        liveInfo(arr) {
+        let infoName = [];
+        arr.forEach(function(item) {
+            let name = item.title.split("(")[0];
+            if (infoName.indexOf(name) < 0) infoName.push(name);
         });
-    },
-    toOther(flag){
-        console.log(new Date(new Date(this.todayL).getTime() + 24 * 60 * 60 * 1000).toLocaleDateString())
-        this.todayL = flag ? new Date(new Date(this.todayL).getTime() + 24 * 60 * 60 * 1000).toLocaleDateString() : new Date(new Date(this.todayL).getTime() - 24 * 60 * 60 * 1000).toLocaleDateString()
-        this.matchAjax()
-    },
-    state(data) {
-      let state = "";
-      switch (data.ismatched / 1) {
-        case -1:
-          state += "unstart";
-          break;
-        case 0:
-          state += "live";
-          break;
-        default:
-          state += "end";
-          break;
-      }
-      return state;
-    },
-    info(a, v) {
-        let state = ''
-        if (a / 1 === 1) {
-          state = v.hasjijin / 1 + v.hasluxiang / 1 ? `${v.hasjijin / 1 ? "<em>集锦</em>" : ""}${ v.hasluxiang / 1 ? "<em>录像</em>" : "" }` : "已结束";
+        return infoName;
         }
-        if (a / 1 === 0) {
-          state = `<em>直播中</em>${ this.liveInfo(v.zhiboinfozh).length ? `<br>${this.liveInfo(v.zhiboinfozh)[0]}` : "" }`;
-        }
-        if(a / 1 === -1) {
-            state = this.liveInfo(v.zhiboinfozh).length ? `${this.liveInfo(v.zhiboinfozh)[0] ? this.liveInfo(v.zhiboinfozh)[0] : ""}${ this.liveInfo(v.zhiboinfozh)[1] ? `<br>${this.liveInfo(v.zhiboinfozh)[1]}` : "" }` : "敬请期待";
-        }
-        return state
     },
-    liveInfo(arr) {
-      let infoName = [];
-      arr.forEach(function(item) {
-        let name = item.title.split("(")[0];
-        if (infoName.indexOf(name) < 0) infoName.push(name);
-      });
-      return infoName;
+    mounted() {
+        this.matchAjax();
     }
-  },
-  mounted() {
-    this.matchAjax();
-  }
 };
 </script>
 <style lang="less">
