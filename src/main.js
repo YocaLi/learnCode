@@ -6,7 +6,6 @@ import router from './router'
 import Sjsonp from './assets/js/config'
 import 'lib-flexible'
 import VueAweSomeSwiper from 'vue-awesome-swiper'
-import 'swiper/dist/css/swiper.css'
 
 
 Vue.prototype.$http = Sjsonp
