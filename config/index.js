@@ -57,7 +57,7 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: 'firebottom/learnCode/master/dist/static',
     assetsPublicPath: '/',
 
     /**
