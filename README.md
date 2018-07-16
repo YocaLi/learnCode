@@ -2,6 +2,9 @@
 
 > A Vue.js project
 
+**[在线预览地址, 或可通过 chrome 控制台手机模式观看](https://htmlpreview.github.io/?https://github.com/firebottom/learnCode/blob/master/dist/index.html#/)**
+
+
 ## Build Setup
 
 ``` bash
