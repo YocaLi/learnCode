@@ -78,19 +78,19 @@ export default {
             this.matchAjax()
         },
         state(data) {
-        let state = "";
-        switch (data.ismatched / 1) {
-            case -1:
-            state += "unstart";
-            break;
-            case 0:
-            state += "live";
-            break;
-            default:
-            state += "end";
-            break;
-        }
-        return state;
+            let state = "";
+            switch (data.ismatched / 1) {
+                case -1:
+                state += "unstart";
+                break;
+                case 0:
+                state += "live";
+                break;
+                default:
+                state += "end";
+                break;
+            }
+            return state;
         },
         info(a, v) {
             let state = ''
